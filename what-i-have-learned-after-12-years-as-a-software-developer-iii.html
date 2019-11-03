@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>What I have learned after 12 years as a software developer (III).</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Moriano's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/hello.html">Hello</a></li>
+                    <li><a href="/category/ml.html">ML</a></li>
+                    <li class="active"><a href="/category/work.html">work</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/what-i-have-learned-after-12-years-as-a-software-developer-iii.html" rel="bookmark"
+           title="Permalink to What I have learned after 12 years as a software developer (III).">What I have learned after 12 years as a software developer (III).</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Sun 28 October 2018</span>
+
+</footer><!-- /.post-info -->      <p>What I have learned after 12 years as a software developer (III).</p>
+<p>This is the final post about my experience as a developer, you might want to check part 1 and part 2.</p>
+<h2>15-Fear-based management is the lowest level of management.</h2>
+<p>Nothing surprising here, if a company is managed based on fear, then people will essentially tend to try to hide errors. Sure, development errors can be easily traced back, but do you really want to generate an atmosphere where people will be making it hard?</p>
+<p>The reality is that errors will happen, is not a matter of if, it is a matter of when, more important than the errors is the reaction to it.</p>
+<p>Once I worked for a company and a bug was discovered, it was not too bad, but I felt that I must inform the owner, an incredible amount of people almost begged me not to do so, just to avoid the rage… It certainly got me thinking? what kind of place was that? Ultimately I communicated the problem anyway and actually the reaction to it was not as bad as people told me.</p>
+<p>In short: do not use fear, people will not respect you, they will only avoid you, a leader will be followed to the battle field if required, a tyrant will not.</p>
+<h2>16-A single branching strategy is fundamental.</h2>
+<p>It does not matter what control version system you use, git, mercurial, svn… but whatever you do, you must have a clear and standard branching strategy, I have personally found that gitflow works very well, but I recognize that it might be too complex for simple organizations.</p>
+<p>That said, the days of committing directly to the master branch (or trunk in svn) should be in the past, with continuous delivery one cannot afford the main branch to get polluted with bugs, the extra time required to merge two branches is minimal nowadays.</p>
+<p>I have personally experienced the situation of a company not having a single branch strategy, the pain of getting everyone in the same standard and the benefits of it, the larger the company, the harder it gets… but the reward will also be bigger.</p>
+<p>A branching strategy should allow you to easily.</p>
+<ol>
+<li>Deploy your code easily and safely at any time.</li>
+<li>Allow you to rollback to a previous version easily and quickly.</li>
+<li>Make hotfixes easy (although hopefully this is something you will rarely do).</li>
+<li>Permit flexibility in development.</li>
+</ol>
+<p>My advice is to use a strategy already tested such as gitflow, if you think you do not need a branching strategy, think again, it can prevent a lot of headaches.</p>
+<h2>17-Compiler warnings must be address immediately.</h2>
+<p>Not all languages benefit from this, but many do (Java, C, C++, .NET). The compiler is, with the debugger, the best friend of any developer, it saves us from ourselves constantly.</p>
+<p>So, if the compiler is giving you a warning, trust me, you need to address it, sure the code most likely will work, but it is a ticking bomb. Also, the fact that you did not write the code generating the warning is no excuse not to fix it.
+Conclusion.</p>
+<p>Most likely, these 17 points will need revision with time, but they truly represent the most relevant lessons I have learned in 12 years.</p>
+<p>Happy coding.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

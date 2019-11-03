@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Why developers need to understand basic math.</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Moriano's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/hello.html">Hello</a></li>
+                    <li><a href="/category/ml.html">ML</a></li>
+                    <li class="active"><a href="/category/work.html">work</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/why-developers-need-to-understand-basic-math.html" rel="bookmark"
+           title="Permalink to Why developers need to understand basic math.">Why developers need to understand basic math.</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Sun 09 September 2018</span>
+
+</footer><!-- /.post-info -->      <p>Why developers need to understand basic math.</p>
+<p>These days coding has become easier than ever, some languages such as python or ruby are great to dive into coding, there are even programming languages for kids like scratch. Such easiness made some people think that one can go into coding without really understanding math… I disagree, at least for those who want to code at a professional level.</p>
+<p>Before you jump on me, keep reading.</p>
+<p>Back in 2001 I was in my first university year back in Madrid, and we had a professor who insisted in one idea</p>
+<div class="highlight"><pre><span></span><span class="nv">Developers</span> <span class="k">do</span> <span class="nv">not</span> <span class="nv">need</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">expert</span> <span class="nv">on</span> <span class="nv">calculus</span>, <span class="nv">but</span> <span class="nv">they</span> <span class="k">do</span> <span class="nv">need</span> <span class="nv">a</span> <span class="nv">high</span> <span class="nv">level</span> <span class="nv">of</span> <span class="nv">basic</span> <span class="nv">math</span>.
+</pre></div>
+
+
+<p>To illustrate this, I will add a couple of examples.
+How can you code an algorithm that counts the numbers from 1 to a 1000?</p>
+<p>I still remember that all of us said, “well just use a for loop and a counter”, and for the record, that is what I would expect if I ask this question to anyone. However it turns out there is much, much better way to do this.</p>
+<p>What’s 1000+1? and then, what’s 999+2? and 998+3? Easy right? Each of the sums is 1001, and there are a total of 500 pairs, so the answer is 500500.</p>
+<p>It turns out that the first person who realized this was Gauss, apparently back in the day, whenever the teachers wanted to be left alone, they will assign this kind of work to the kids, turns out Gauss figure this out while he was still a kid.
+Gauss figured out an effective way to add the numbers 1 to N</p>
+<p>Now, do not get me wrong, I do not expect that any developer would be a genius as Gauss was, but I do expect any developer to appreciate the incredible advantage of this method, essentially it allows to go from O(n) to O(1) running time.
+Say you have 23 people in one room, what do you think it the chance than two of them have the same birthday?</p>
+<p>This is an interesting problem, here I am not particularly interested in the math behind this (which has to do with stats), I am more interested on how our intuition can be terrible some times. What would be your guess? mine was around 10%. Well it turns out that with 23 people the chance of two of them having the same birthday is actually 50%
+The probability of at least two people having the same birthday goes up much quicker than expected</p>
+<p>Surprised? Well that’s actually the whole point, this is called the Birthday Paradox and it is used to show how bad human beings are at guessing probabilities.</p>
+<p>So what’s the deal with this and programming? Essentially this can be applied to show how easy it is to have hash collisions, and that normally is related to security, so yes, this IS very relevant. This is called the Birthday attack, unsurprisingly, I have known other developers who experienced the huge pain of being bitten by this (essentially two users end up with the same login hash and they could see other’s users data).
+Imagine you have a really large sheet of paper of standard width (0.1 mm), you fold it 50 times, what is the new width?</p>
+<p>Lets do the math manually, after 1 fold we have a width of 0.2 mm, then 0.4, 0.8, 0.16, 0.32… We are dealing with an exponential function here, the base would be 2 tenths of mm, and the exponent would be 50, so we have 2^50 which is 1125899906842624 tenth of millimeter, we divide by 10 and we have millimiters, we divide then by 1000 and we will have meters, we divide by 1000 again and we will have kilometers and the answer is 112589990 kilometers, now think about one thing: the distance to the moon is 384400 Kilometers.</p>
+<p>This mean that folding that hypothetically long enough sheet of paper will cover the distance from the Earth to the Moon 292 times!!</p>
+<p>Your intuition (and mine) tells you that such a thing is simply not possible, do the math and prove yourself wrong. This particular example is fetched from a great talk from Eduardo Saenz de Cabezon “Las matematicas son para siempre (math is forever)” which is available in Ted.</p>
+<p>This example shows how the exponential function can get really crazy really fast, and that is important for developers too.
+Conclusion.</p>
+<p>None of the examples I provided requires advanced math or calculus, all of them can be explained by using the simplest operations, yet they yield important results and relevant lessons to think about: programming requires thinking about how things scale and math provides the tools to perform such thinking.</p>
+<p>So in short: Do not be afraid of math, embrace it for it is the best companion of a good developer.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

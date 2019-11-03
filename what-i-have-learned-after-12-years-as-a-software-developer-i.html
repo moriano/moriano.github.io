@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>What I have learned after 12 years as a software developer (I).</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Moriano's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/hello.html">Hello</a></li>
+                    <li><a href="/category/ml.html">ML</a></li>
+                    <li class="active"><a href="/category/work.html">work</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/what-i-have-learned-after-12-years-as-a-software-developer-i.html" rel="bookmark"
+           title="Permalink to What I have learned after 12 years as a software developer (I).">What I have learned after 12 years as a software developer (I).</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Sun 14 October 2018</span>
+
+</footer><!-- /.post-info -->      <p>What I have learned after 12 years as a software developer (I).</p>
+<p>I started coding professionally at 2006, at that time I was just fresh out of uni and certainly I had a lot to learn ahead of me. Over the years I have accumulated quite a lot of knowledge, part of it by simply keep myself studying and part of it out of pure experience.</p>
+<p>Please be aware that this reflects only my own experiences and may or may not reflect other people’s experiences, we developers tend to have quite different opinions when it comes to code, that said, here is what I have learned.</p>
+<h2>1-Most of the things will not be needed, apply the Yagni principle.</h2>
+<p>The most common, by far, mistake that I see is developers trying to account for stuff that simply is not required, it does not cease to amaze me how often this happens, time after time I see complex code and architecture in place that is there because “we might need flexibility in the future”, and what happens? that future rarely shows itself.</p>
+<p>There are may examples of this, some of them are relatively benign like declaring an interface that has a single implementation because “we might have other implementations in the future” I see this quite often with DAO objects, the reality is that I rarely see more than one implementation of a given DAO interface, and even if that happens, modern IDEs have refactoring utilities that allow to extract an interface.</p>
+<p>Worse than that, I have seen code became very complicated to account for stuff that was not even asked for, once I had to deal with a monstruosity in java whose only job was to read a csv file, the developer (possibly with the best faith) prepare it so it could read XML, json and a number of other formats, unfortunately in the process of doing so, he got the code quite convoluted (no, it was not a simple polymorphism), the final project ended up with many dependencies, and the worst part is that it was a memory consumption beast… of course the code has never processed anything other than csv files, so what was the value of it?</p>
+<h2>2-Complex architectures are evil, evil I say!</h2>
+<p>Of course there are exceptions, in some scenarios one might need to have a complex or non-trivial architecture to solve a complex problem, but in the vast majority of cases there is a tendency to overachitect things, specially in the java world.</p>
+<p>Most of the software that most of the developers write and maintain is quite boring, most of the cases just webpages that read and write from a datasource (a database, a webservice …), do we really need a complex architecture for that? in most of the cases what will occur is that the junior developers not familiar with the architecture will start to cut corners in order to get stuff done, at the end of it, the code tends to evolve into a big ball of mud.</p>
+<p>Don’t get me wrong, I like when I am faced with a problem that requires a non-trivial solution, I love to design big architectures (we all do, I think), but more often than not I have seen complex architectures which mainly just satisfy the ego of the developer(s) who came out with the idea. All being equal, the simple the better.</p>
+<h2>3-If you want to generate chaos, do not use a ticket system.</h2>
+<p>As a golden rule, nothing, absolutely nothing should EVER be done without a ticket describing what is being done and why, furthermore, in my current job that is simply not possible, you need a ticket to be able to create a branch.</p>
+<p>This rule is specially important if the ticket is very urgent or it is a blocker, precisely because of that, one needs to follow the procedure, the reason being is that the procedure is design when people can have a cold mind, so when the shit hits the fan, you better follow what your past (and calm) you decided to do.</p>
+<p>Also, it allows to have control over changes and bring some sort of discipline to developers and non-technical people.</p>
+<h2>4-Not retaining good developers.</h2>
+<p>This is an important one.</p>
+<p>Finding good developers is not easy, first they are expensive, second, they last very little in the market as companies will hire them quite quickly.</p>
+<p>It is not always possible to retain every good developer, after all we live in a free market world and people change companies for many reasons, however there is a big difference between the natural turn over and simply not managing to keep people happy.</p>
+<p>Every single time a good developer leaves, two things happens: first the company loses a lot of knowledge that will go away with that developer, and second morale takes a hit, work mates talk mainly… well about work, when a good developer leave for non-natural causes (maybe he/she is moving to a new city, maybe they are about to start their own business), the conversations for the few weeks while such developer will remain in the company will be mainly about how happy he/she is of leaving and how everyone else should do the same.</p>
+<p>Notice that to keep people happy there are three main pillars, and they are all equially important</p>
+<ol>
+<li>Salary.</li>
+<li>Work environment (relations with other devs, managers…etc)</li>
+<li>Career development (how interesting are the projects, how the future looks like…etc)</li>
+</ol>
+<p>It is not always possible to keep all of those three pillars up, but at the very least two of them should ALWAYS be solid.</p>
+<h2>5-Lack of system monitoring.</h2>
+<p>Software is complex, too complex, on top of that, we have been doing software engineering for maybe about 50 years, so we are all still learning (I am sure that 100 years for now, people will consider what we do as primitive as we consider now the car production systems in 1920).</p>
+<p>Not monitoring is simply too expensive, once things stop working in production is already too late, I have seen a bit of everything, from companies with fantastic monitoring to companies with no monitoring and everything in between.</p>
+<p>Once I saw a company’s website go down simply because they have run out of disk space which is pretty much the equivalent of not being able to serve food at a restaurant because someone forgot to buy it.</p>
+<p>Along with lack of monitoring comes lack of alerts, a very common mistake I have seen way too often are systems constantly triggering red alerts and people became so used to false positives that they are simply ignored… until one false positive turns out to be a true positive, having a good set of reliable alerts is key to keep a healthy system, if there are false positives then certainly more work has to be done and better alerts need to be defined, ignoring the problem is not going to help.</p>
+<h2>6-Ignoring technical debt.</h2>
+<p>Technical debt is pretty much like financial debt: It is not always bad, sometimes it is perfectly fine to ask for a credit so the company can perform other investments, but leave debt unpaid and the compound interest will kill you.</p>
+<p>There are many tools out there to control technical debt (I have been using sonar for quite a while with good results), there is absolutely no excuse to leave technical debt unpaid, it is your responsibility as a developer to push for it, because the non-technical people will never, ever ask you to pay the technical debt, you are the expert and you are paid for it, so put up a fight, sometimes you even have to put up a fight knowing you will lose it, but still it is worth to make a point (I have found however that asking people to send me an email saying they will assume any responsibility if something goes wrong, makes miracles).</p>
+<p>Along with ignoring technical debt, there is the bad practice of not doing code reviews, every code to be merged must go through a pull request, with the possible exception of hotfixes (which, by the way you should rarely do anyway). I personally like the code reviews and consider them a safety net, it has not been uncommon for me to find myself saved by another coworker after reviewing my code.
+Conclusion.</p>
+<p>This is just the first part of the post, but really hope someone finds this useful as it really represents years of my own experience.</p>
+<p>Happy coding.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>The bare minimum your should be able co cover in a technical interview. Part 1.</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Moriano's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/hello.html">Hello</a></li>
+                    <li><a href="/category/ml.html">ML</a></li>
+                    <li class="active"><a href="/category/work.html">work</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/the-bare-minimum-your-should-be-able-co-cover-in-a-technical-interview-part-1.html" rel="bookmark"
+           title="Permalink to The bare minimum your should be able co cover in a technical interview. Part 1.">The bare minimum your should be able co cover in a technical interview. Part 1.</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Tue 05 February 2019</span>
+
+</footer><!-- /.post-info -->      <p>The bare minimum you should be able to cover in an technical interview (I)</p>
+<p>I have been doing technical interviews for around 8 years, and it is not easy to find great candidates, probably because great candidates last very little in the market, however time after time I deal with candidates that, unfortunately, are not able to cover certain basics, lets go through them.</p>
+<h2>1-Big-oh notation, time and space complexity.</h2>
+<p>Being able to determine when it is worth to optimize an algorithm is absolutely fundamental, I have seen codes where collections of 100 elements were sorted because a search will be performed once or twice… that says a lot about developers.</p>
+<p>Also, it is important to understand how bad or how well out algorithm will do as a function of the size of the input. An image is worth more than words, so here is the fundamental picture to keep in mind.</p>
+<p>bigh oh runnin times</p>
+<p>Anybody doing an interview should have that picture really clear in their heads. The reason? lets go through a simple question: lets say you have 1 million numbers, unsorted, and you will need to search whether or not a given number is in your million numbers, such operation is to be repeated 100 times. Is it worth sorting your 1 million numbers or not?</p>
+<p>It is a simple question, and it should have a simple and definite answer, however without the help of the big-oh notation and some knowledge about the running time of sorting and searching algorithms, it is impossible to answer it.</p>
+<p>However, with the help of big-oh one can answer this question very effectively.</p>
+<p>Doing a sequential search will take linear time, that is <code>O(n)</code>
+Doing a binary search will take log time, that is <code>O(log(n))</code> but in order to perform a binary search we first need to sort. Sorting takes <code>O(n∗log(n))</code> now, in our case we are specifically dealing with <span class="math">\(log_2(10^6)\)</span> which is approximately <code>20</code> as <span class="math">\(2^{20}≃10^6\)</span></p>
+<p>This means that</p>
+<ol>
+<li>Using a binary search will take around 20 operations (worst case) to find a number</li>
+<li>Using a sequential search will take 1 million operations (worst case) to find a number</li>
+<li>The cost of preparing our numbers to be able to perform binary searches is 20 million operations</li>
+</ol>
+<p>Now, lets ask ourselves the question again. Is it worth sorting 1 million numbers if we are going to search 100 times within them? The answer is yes, as our initial cost is 20 million operations, but after that, the cost of a binary search is almost none, while a sequential search will take 
+1 million operations each time.</p>
+<h2>2-Basic data structures.</h2>
+<p>The simple data structure is an array, but everyone should be familiar with stacks, queues, linked lists, hash tables, trees, graphs and possibly also sets and heaps.</p>
+<p>Furthermore, I expect people to be able to implement any of the structures mentioned above. Sure, you will NEVER implement those in real life, but I think it is an interesting exercise to be able to implement those by yourself. I tend to ask people how to implement a simple Stack, and some people really struggle to do so, I would never ask anybody to implement a full hashtable, but I will certainly expect them to be able to do so if a hash function is provided to them.</p>
+<p>Being familiar with data structures is key for being able to solve problems, here comes an example: Imagine you are given all the correct works of the English dictionary, how could you implement a spell checker that will not only inform the user if the work they type is correct, but also provide them suggestions in the case the wrote an incorrect work?</p>
+<p>Most people will initially resort to a hashtable, however there is a problem with hashtables: they only help you with exact searches, if you type “helo” there is no way to let the user know that maybe he wanted to type “hello” or “hell”. How would you do that? The solution is a trie, a type of tree where each level contains each of the letter of the alphabet, if a particular node is a word, then it will contain a flag indicating so, again lets illustrate this with a picture.</p>
+<p>This is a simple yet interesting example on how a problem that might seem very complex at first could be effectively solved using the right structure. Most people operate with linked lists, sets and hashtables pretty much every day, however trees, graphs and other structures might not be used so often but they are incredibly powerful in certain situations. As a software engineer it is your job to know your tools, and data structures are pretty much tools 101 here.</p>
+<h2>3-Basic data types.</h2>
+<p>What should you know about floating point numbers and monetary calculations? they are no-no, and for good reasons. Due to the internals of how floating point numbers are stored, they cannot represent fractions accurately, the loss of precision is not too terrible for scientific calculations, but it can be really bad for monetary calculations (or any other calculations where precision is critical). As an example a simple piece of python code (the same problem will occur in java)</p>
+<div class="highlight"><pre><span></span><span class="n">millis</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+<span class="n">total</span> <span class="o">+=</span> <span class="n">millis</span>
+<span class="k">print</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Now, the expected output of that calculation should be <code>1</code>, right? well, not really, the actual result is
+<code>1.0000000000000007</code></p>
+<p>So, if that happens after only 1000 operations, imagine what floating point numbers could do to multiplications and divisions. And then imagine what would happen if those multiplications and division involve money (currency conversion, tax calculations, margins…) Again, it is your job as a IT professional to know this and use the proper tools. Most languages provide mechanisms to deal with this problem, do you know them?</p>
+<h2>4-Basic object orientation understanding.</h2>
+<p>Becoming an expert on object oriented programming takes years, even I struggle sometime to find the right abstractions, it is a never ending process but, when done correctly, object oriented programming can solve many problems, as it allows us to work with abstractions rather than low level details.</p>
+<p>Can you clearly explain what is polymorphism? without resorting to an example? could you explain it to your mum? that is the level you should be able to provide in an interview.</p>
+<p>Do you fully understand inheritance and composition? Have you realize that inheritance can actually break encapsulation (if done wrong)?</p>
+<p>I am surprised, quite often I ask candidates about information hiding and most of them are able to explain the mechanisms that languages like java provide for such technique (private, protected, public…) however when asked “why would you ever want to make something private? can you give me an example?” many people actually struggle, furthermore, many people will simply answer that you make attributes private and then provide getters and setters.</p>
+<p>You need to understand how information hiding allows you to keep the internal state of the object separated from the outside world, you should be aware of the consequences of not doing so, and you should be able to clearly and confidently explain that.</p>
+<p>This concludes the first part of this story.</p>
+<p>Happy coding.</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

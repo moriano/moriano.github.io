@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Machine learning basics: the cost function</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Moriano's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/hello.html">Hello</a></li>
+                    <li><a href="/category/ml.html">ML</a></li>
+                    <li class="active"><a href="/category/work.html">work</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/machine-learning-basics-the-cost-function.html" rel="bookmark"
+           title="Permalink to Machine learning basics: the cost function">Machine learning basics: the cost function</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Sat 15 September 2018</span>
+
+</footer><!-- /.post-info -->      <p>Machine learning basics: the cost function</p>
+<p>Machine learning is ultimately a way to make a program perform a task and to get that task done better over time. Cost functions define how good or bad a program is at performing such task, pretty much every problem consist on getting the value of the cost function to be as small as possible.</p>
+<p>For our example, we will use a very simple dataset which consist on two variables: Car speed and distance to stop, our ultimate goal will be to, given a speed we have never seen before, predict what will be the distance to stop.</p>
+<p>Lets define some common vocabulary:</p>
+<div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">:</span> <span class="n">These</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">observations</span><span class="o">,</span> <span class="k">in</span> <span class="n">our</span> <span class="k">case</span> <span class="n">it</span> <span class="n">will</span> <span class="n">represent</span> <span class="n">the</span> <span class="n">car</span> <span class="n">speed</span><span class="o">.</span>
+<span class="n">y</span><span class="o">:</span> <span class="n">The</span> <span class="n">correct</span> <span class="n">answers</span> <span class="n">to</span> <span class="n">our</span> <span class="n">observations</span><span class="o">,</span> <span class="k">in</span> <span class="k">this</span> <span class="k">case</span> <span class="n">the</span> <span class="n">distance</span><span class="o">.</span>
+<span class="n">y</span><span class="o">^</span> <span class="o">:</span> <span class="n">Our</span> <span class="n">own</span> <span class="n">predictions</span> <span class="n">given</span> <span class="n">an</span> <span class="n">X</span>
+</pre></div>
+
+
+<p>Notice that all of the values above are actually vectors, or if you prefer, lists (possibly a more friendly term for a developer), this means that each of them can be accessed by indexes, such as
+yi</p>
+<p>This takes us to define another element</p>
+<div class="highlight"><pre><span></span><span class="n">n</span><span class="o">:</span> <span class="n">The</span> <span class="n">total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">observations</span><span class="o">,</span> <span class="k">in</span> <span class="k">this</span> <span class="k">case</span> <span class="k">this</span> <span class="n">means</span> <span class="n">how</span> <span class="n">many</span> <span class="n">elements</span> <span class="n">we</span> <span class="n">have</span> <span class="k">in</span> <span class="n">X</span> <span class="n">and</span> <span class="n">y</span>
+</pre></div>
+
+
+<p>Now, this is the data we are going to work with
+Speed (X)
+    Distance (y)
+4   2
+7   4
+8   16
+9   10
+10  18
+11  17
+12  14
+13  26
+14  26
+15  20
+16  32
+17  32
+18  42
+19  36
+20  32
+22  66
+23  54
+24  70
+25  85</p>
+<p>We have a total of 19 observations here, now lets plot them
+The distance required to stop a car depending on its speed.</p>
+<p>With all this in our hands, we can start defining our cost function. A good intuition would be to say that our cost function is simply the difference between our predictions and the actual value.</p>
+<p>For example at speed 15km/h we need 20 meters to stop. Imagine that we have</p>
+<div class="highlight"><pre><span></span><span class="nv">ModelA</span> <span class="nv">that</span> <span class="nv">predicts</span> <span class="nv">that</span> <span class="mi">25</span> <span class="nv">meters</span> <span class="nv">are</span> <span class="nv">needed</span>, <span class="nv">the</span> <span class="nv">error</span> <span class="nv">would</span> <span class="nv">be</span> <span class="mi">25</span>–<span class="mi">20</span><span class="o">=</span><span class="mi">5</span>.
+<span class="nv">ModelB</span> <span class="nv">that</span> <span class="nv">predicts</span> <span class="nv">that</span> <span class="nv">we</span> <span class="nv">need</span> <span class="mi">21</span> <span class="nv">meters</span> <span class="nv">to</span> <span class="nv">stop</span> <span class="k">then</span> <span class="nv">the</span> <span class="nv">error</span> <span class="nv">would</span> <span class="nv">be</span> <span class="mi">22</span>–<span class="mi">20</span><span class="o">=</span><span class="mi">2</span> <span class="nv">which</span> <span class="nv">is</span> <span class="nv">already</span> <span class="nv">a</span> <span class="nv">smaller</span> <span class="nv">error</span> <span class="nv">than</span> <span class="nv">the</span> <span class="nv">previous</span>.
+<span class="nv">ModelC</span> <span class="nv">that</span> <span class="nv">predicts</span> <span class="nv">that</span> <span class="nv">we</span> <span class="nv">need</span> <span class="mi">19</span> <span class="nv">meters</span> <span class="nv">to</span> <span class="nv">stop</span>? <span class="k">then</span> <span class="nv">the</span> <span class="nv">error</span> <span class="nv">would</span> <span class="nv">be</span> <span class="mi">19</span>–<span class="mi">20</span><span class="o">=</span>−<span class="mi">1</span> <span class="nv">this</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">bit</span> <span class="nv">weird</span>, <span class="nv">as</span> <span class="nv">we</span> <span class="nv">want</span> <span class="nv">to</span> <span class="nv">make</span> <span class="nv">our</span> <span class="nv">error</span> <span class="nv">be</span> <span class="nv">close</span> <span class="nv">to</span> <span class="mi">0</span>, <span class="nv">not</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">negative</span>. <span class="nv">The</span> <span class="nv">solution</span> <span class="k">for</span> <span class="nv">that</span> <span class="nv">would</span> <span class="nv">be</span> <span class="nv">to</span> <span class="nv">use</span> <span class="nv">a</span> <span class="nv">squared</span> <span class="nv">error</span> <span class="nv">instead</span>, <span class="nv">so</span> <span class="nv">that</span> <span class="nv">way</span> <span class="nv">the</span> <span class="nb">result</span> <span class="nv">would</span> <span class="nv">always</span> <span class="nv">be</span> <span class="nv">positive</span>, <span class="nv">lets</span> <span class="nv">recalculate</span> <span class="nv">the</span> <span class="nv">errors</span> <span class="nv">using</span> <span class="nv">squares</span>.
+
+<span class="nv">ModelA</span><span class="o">=</span><span class="ss">(</span><span class="mi">25</span>–<span class="mi">20</span><span class="ss">)</span><span class="mi">2</span><span class="o">=</span><span class="mi">25</span>
+<span class="nv">ModelB</span><span class="o">=</span><span class="ss">(</span><span class="mi">22</span>−<span class="mi">20</span><span class="ss">)</span><span class="mi">2</span><span class="o">=</span><span class="mi">4</span>
+<span class="nv">ModelC</span><span class="o">=</span><span class="ss">(</span><span class="mi">19</span>−<span class="mi">20</span><span class="ss">)</span><span class="mi">2</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+
+
+<p>More generally we can simply say Error=(yi^–yi)2</p>
+<p>With this we can quickly conclude that the best model is the one with the smallest value for the cost function, in this case, that would be ModelC.</p>
+<p>The next step is to apply this to every point in the problem, our model should be able to predict what is the distance required to stop for any given speed, and we should be able to calculate the error of such prediction. The solution? apply exactly the same logic but to the whole set of data. As we mentioned before, distance and speed are both vectors, so we can simply do
+Error=(y1^–y1)2+(y2^–y2)2…+(yn^–yn)2</p>
+<p>Or if we want to use a better mathematical term
+Error=∑nn=1(y^n–yn)2</p>
+<p>Do not let the math intimidate you, the term ∑nn=1 is just a loop over the elements of vectors.</p>
+<p>We cannot simply keep adding the terms, think about it, this means that if we have a dataset with a lot of observations, our error will grow as we have more observations, the solution for that is to use the mean error instead, so lets add that to our formula.
+Error=1n∑nn=1(y^n–yn)2</p>
+<p>So now, what we have is the mean of all the squared errors, this function is surprisingly called “Mean Squared Error” or simply MAE and it will be an important concept for the rest of this post
+MSE=1n∑nn=1(y^n–yn)2
+Making predictions</p>
+<p>Now, we have been talking a lot about y^ but how can calculate it? in linear regression this is done by applying a simple formula
+yi^=wXi+b</p>
+<p>if we want to generalize it we can simply say
+y^=wX+b</p>
+<p>This introduces 2 new values w and b</p>
+<div class="highlight"><pre><span></span><span class="n">w</span> <span class="o">:</span> <span class="n">Represents</span> <span class="n">the</span> <span class="n">weight</span> <span class="n">that</span> <span class="n">we</span> <span class="n">need</span> <span class="n">to</span> <span class="n">calculate</span><span class="o">,</span> <span class="k">this</span> <span class="k">is</span> <span class="n">the</span> <span class="n">value</span> <span class="n">by</span> <span class="n">which</span> <span class="n">we</span> <span class="n">will</span> <span class="n">multiply</span> <span class="n">X</span><span class="o">.</span>
+<span class="n">b</span><span class="o">:</span> <span class="n">Represents</span> <span class="n">the</span> <span class="n">bias</span><span class="o">,</span> <span class="n">we</span> <span class="n">will</span> <span class="n">simply</span> <span class="n">add</span> <span class="k">this</span> <span class="n">term</span><span class="o">,</span> <span class="n">and</span> <span class="n">we</span> <span class="n">will</span> <span class="n">NOT</span> <span class="n">relate</span> <span class="n">it</span> <span class="n">to</span> <span class="n">X</span>
+
+<span class="n">An</span> <span class="n">example</span> <span class="n">will</span> <span class="n">make</span> <span class="k">this</span> <span class="n">more</span> <span class="n">clear</span><span class="o">,</span> <span class="n">lets</span> <span class="n">say</span> <span class="n">w</span><span class="o">=</span><span class="err">−</span><span class="mi">1</span><span class="o">,</span><span class="n">b</span><span class="o">=</span><span class="mi">10</span>
+</pre></div>
+
+
+<p>This shows a terrible prediction, our red line (that is, our model) does not align at all with our actual observations. The interesting part here is to quantify how bad it is, in order to do so, lets just have a look at the first 5 datapoints so we can do all calculations by hand.
+Speed   Distance    predict
+4   2   6
+7   4   3
+8   16  2
+9   10  1
+10  18  0</p>
+<p>We will take the data points where i=1 that is, the first row. So</p>
+<p>X1=4;y1=2;y1^=6 so Error1=(y1^–y1)2=16</p>
+<p>If we apply MSE=1n∑nn=1(y^n–yn)2 we get MSE=1/5+(6−2)2+(3−4)2+(2−16)2+(1−10)+(0−18)2=123.6</p>
+<p>Now, lets consider another model where w=3;b=−12, then we get this</p>
+<p>It is already obvious that this model is much better at predicting the distance, however the question is how much better? again the answer lies in MAE, the values are
+Speed   Distance    predict
+4   2   0
+7   4   9
+8   16  12
+9   10  15
+10  18  18</p>
+<p>So we can again calculate MSE=1/5+(0−2)2+(9−4)2+(12−16)2+(15−12)+(18−18)2=10.8</p>
+<p>This gives us a critical information, not only we can figure out which model is better, we can also quantify how much better the model is, and that becomes very important, imagine for example how relevant this could be for autonomous driving.
+Cost functions for other problems.</p>
+<p>MSE is a good cost function, but it only helps us for regression problems, that means problems where our ouput is a number, for example predicting how warm a day would be based on some variables or predicting what will be the value of a security in the stock market.</p>
+<p>However there are many problems where we want to classify values, an example would be to know whether or not a car can stop completely or if it would have an accident, in this scenario MSE does not help us, we need another cost function.
+The logistic function.</p>
+<p>For binary classification problems where our output can only take two possible values, we want to use this little function logistic=11+e−y^ It does not look very intuitive, but if we actually plot it, we get.
+Logistic sigmoid function</p>
+<p>The interesting thing about this function is that it takes values between 0 and 1, so we can apply a similar measure to the error by simply comparing y with our y^ which will take values from 0 to 1 while y will either be 0 or 1.
+Conclusion</p>
+<p>Cost functions are at the core of understanding machine learning as they ultimately provide a measure of success for a given model, they are also at the center of fundamental algorithms such as gradient descent.</p>
+<p>It really helped me in the early day to calculate some of the functions by hand to fully understand their meaning.</p>
+<p>There are many other cost functions that one needs to be aware, but these two are the core ones to start with. I strongly recommend going through a couple of examples with MSE.</p>
+<p>Happy coding.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

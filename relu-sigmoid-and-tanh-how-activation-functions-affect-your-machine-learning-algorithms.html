@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>ReLU, sigmoid and tanh, how activation functions affect your machine learning algorithms.</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Moriano's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/hello.html">Hello</a></li>
+                    <li><a href="/category/ml.html">ML</a></li>
+                    <li class="active"><a href="/category/work.html">work</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/relu-sigmoid-and-tanh-how-activation-functions-affect-your-machine-learning-algorithms.html" rel="bookmark"
+           title="Permalink to ReLU, sigmoid and tanh, how activation functions affect your machine learning algorithms.">ReLU, sigmoid and tanh, how activation functions affect your machine learning algorithms.</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Mon 01 October 2018</span>
+
+</footer><!-- /.post-info -->      <p>ReLU, sigmoid and tanh, how activation functions affect your machine learning algorithms.</p>
+<p>If you have been working with neural networks for a bit, you already know that we need to use activation functions in the hidden layers (well, and also in the output layer), in order to achieve non-linearity.</p>
+<p>However, I really enjoy understanding WHY should we use some activation functions instead of others, furthermore, I like to know how different activation functions affect a given model.</p>
+<p>In this post I will focus on classification problems, more specifically I will just consider binary classification problems, lets dive in
+Binary classification outputs.</p>
+<p>Say you have a neural network that will classify elements into two different categories, for example given an image, it could determine if it is a cat or a dog, in this case our output will be either 1 (cat) or 0 (dog). That’s where the sigmoid function comes in handy.</p>
+<p>The formula for the sigmoid function is
+<span class="math">\(sigmoid(x)=\frac{1}{1+e^{-x}}\)</span></p>
+<p>And the way it looks if we plot it is this</p>
+<p>What makes the sigmoid function good for classification problems is that it outputs a value between 0 and 1 that changes in an uniform manner, this makes the sigmoid a great function as an output for a classification model, we can then simply perform predictions such as</p>
+<p><span class="math">\(\hat{y}=1 \text{if} sigmoid(x)&gt;=0.5; \text{y^=0} if sigmoid(x)&lt;0.5\)</span></p>
+<p>So, why not use the sigmoid also as an activation function in the hidden layers of a neural network? that takes us to the next stage.
+Backward propagation and weight updates.</p>
+<p>Ultimately the way we update our weights and biases is this
+W=W–α∂Cost∂Wb=b–α∂Cost∂b</p>
+<p>This of course assumes that α represents the learning rate. What is important to notice is that if our derivatives are too small, then our updates to W and b will also be small. The derivative of the sigmoid function is
+ez–e−zez+e−z∗(1–ez–e−zez+e−z)</p>
+<p>which turns out to be simply
+sigmoid(x)∗(1−sigmoid(x))</p>
+<p>if we plot it, this is what we get.</p>
+<p>Here we have our first problem: the maximum value we will ever get is 0.25, already quite low, but things get much worse as our x gets away from 0, as then the derivatives get smaller and smaller. This ultimately means our updates to the W and b will be also small, thus making the learning process slow.</p>
+<p>The solution? Using a different function.
+tanh function to the rescue.</p>
+<p>Instead of the sigmoid, we will have a look at the hyperbolic tangent, or simply tanh(x) which is defined as
+tanh(x)=ex–e−xex+e−x</p>
+<p>when plotted, looks like this</p>
+<p>This one gives us an output between -1 and 1, but more interestingly, the derivative value is
+1–(ex–e−xex+e−x)2</p>
+<p>or in simpler terms
+1–tanh2(x)</p>
+<p>if we plot it, we get</p>
+<p>Pay close attention to the vertical axis! unlike the derivative of the sigmoid function, in this one we reach up to a value of 1, this is so much better than the maximum of 0.25 we got with the sigmoid. This means that we will be updating our W and b values at a much quicker pace.
+Simpler is better: the ReLU function.</p>
+<p>But we still have another interesting candidate: the ReLU function. ReLU stands for Rectified Linear Unit, and it is defined simply as
+relu(x)=max(0,x)</p>
+<p>you can also define it as
+relu(x){0 if x&lt;0x if x&gt;=0</p>
+<p>In any case, the relu function looks like this.</p>
+<p>What I like of it is the simplicity, I have not done calculus in a while, but I still remember that
+f(x)=xaf′(x)=a∗xa−1</p>
+<p>This means that the derivative of a ReLU function is quite large, lets plot it.</p>
+<p>Notice that I have not plotted the value when x&lt;0 in that case, the value of the derivative will be 0, however in the rest of the cases, we have quite a large derivative value.
+So what?</p>
+<p>How does this all affect the learning then? remember that our equations for updating W and b are
+W=W–α∂Cost∂Wb=b–α∂Cost∂b</p>
+<p>And also keep in mind that the derivatives of the functions are different, in particular, the derivative of the sigmoid is quite small compared to the other two functions.</p>
+<p>To see how this will impact the learning, I wrote a python notebook, which you can check at my kaggle account, there I used the well known MNIST dataset, but only to classify digits 0 and 1, I run a simple neural network with 256 hidden units, and using the different activation functions mentioned here. The results are pretty obvious:</p>
+<p>Notice that in all the cases, the learning rate and the number of hidden units was the same, also, the initial values of W and b were also the same.</p>
+<p>It is fairly impressive how the tanh and ReLU functions are much better candidates as activation functions in the hidden layers.</p>
+<p>In conclusion:</p>
+<div class="highlight"><pre><span></span><span class="nv">The</span> <span class="nv">sigmoid</span> <span class="nv">function</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">function</span> <span class="nv">you</span> <span class="nv">should</span> <span class="nv">use</span> <span class="nv">as</span> <span class="nv">the</span> <span class="nv">output</span> <span class="nv">function</span> <span class="k">for</span> <span class="nv">classification</span> <span class="nv">problems</span>, <span class="nv">as</span> <span class="nv">the</span> <span class="nv">value</span> <span class="nv">range</span> [<span class="mi">0</span>,<span class="mi">1</span>] <span class="nv">matches</span> <span class="nv">exactly</span> <span class="nv">what</span> <span class="nv">a</span> <span class="nv">binary</span> <span class="nv">classification</span> <span class="nv">problem</span> <span class="nv">needs</span>.
+<span class="nv">The</span> <span class="nv">sigmoid</span> <span class="nv">function</span> <span class="nv">will</span> <span class="nv">also</span> <span class="nv">work</span> <span class="nv">as</span> <span class="nv">an</span> <span class="nv">activation</span> <span class="nv">function</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">hidden</span> <span class="nv">layers</span>, <span class="nv">but</span> <span class="nv">it</span> <span class="nv">will</span> <span class="nv">not</span> <span class="nv">be</span> <span class="nv">as</span> <span class="nv">quick</span>.
+<span class="nv">The</span> <span class="nv">tanh</span> <span class="nv">function</span> <span class="nv">is</span> <span class="nv">pretty</span> <span class="nv">much</span> <span class="nv">always</span> <span class="nv">better</span> <span class="nv">to</span> <span class="nv">use</span> <span class="nv">in</span> <span class="nv">hidden</span> <span class="nv">layer</span> <span class="nv">than</span> <span class="nv">the</span> <span class="nv">sigmoid</span> <span class="nv">function</span>.
+<span class="nv">The</span> <span class="nv">relu</span> <span class="nv">function</span> <span class="nv">is</span> <span class="nv">also</span> <span class="nv">a</span> <span class="nv">good</span> <span class="nv">candidate</span> <span class="k">for</span> <span class="nv">hidden</span> <span class="nv">layers</span> <span class="nv">as</span> <span class="nv">an</span> <span class="nv">activation</span> <span class="nv">function</span>.
+</pre></div>
+
+
+<p>Happy coding.</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>What I have learned after 12 years as a software developer (II).</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Moriano's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/hello.html">Hello</a></li>
+                    <li><a href="/category/ml.html">ML</a></li>
+                    <li class="active"><a href="/category/work.html">work</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/what-i-have-learned-after-12-years-as-a-software-developer-ii.html" rel="bookmark"
+           title="Permalink to What I have learned after 12 years as a software developer (II).">What I have learned after 12 years as a software developer (II).</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Sat 20 October 2018</span>
+
+</footer><!-- /.post-info -->      <p>What I have learned after 12 years as a software developer (II).</p>
+<p>12 Years as a coder (let it be junior developer, senior, team lead or principal) have taught me a lot, these are the rest of the points that I consider the most important ones, this is the second part of the article, find the first part here.</p>
+<h2>7-Having a proper build pipeline is fundamental.</h2>
+<p>There are different ways to do this, and it will certainly depend on the circumstances of each company, but as a bare minimum you should have an integration server where you can have repeatable builds.</p>
+<p>Of course this also means that your build process should be as simple as possible, I found it acceptable to have to execute a couple of commands to get a full build (in order to get test coverage and so on), but that should all be clearly encapsulated in your build server.</p>
+<p>Goes without saying that if your builds fail with certain frequency then you need to stop whatever you are doing and make them stable, after all, what’s the point of deploying stuff that does not always build correctly.</p>
+<p>It is also very advisable to control the build times, I have seen projects that take 45 minutes to compile, no matter what you do, if your build process takes 45 minutes you are not agile (and I do not mind if you do standups or not).</p>
+<h2>8-Deadlines are just wrong.</h2>
+<p>To a certain extent I understand that the business wants to get an idea of when something is going to be done (even when that “something” is not clearly defined) and I think that having a certain horizon can help to keep a bit of tension and motivation, but having deadlines is, in the vast majority of cases, simply wrong.</p>
+<p>Lets face it, we have been doing software engineering for less than 40-50 years, we are still learning, and believe it or not, the vast majority of software projects are delayed, getting obsessed with deadlines will only lead to poor quality code that will then lead to bugs and that will cost the company.</p>
+<p>Do not get me wrong, I am not saying that timing is not important, of course it is, what I am saying is that it should not drive the company behavior. There are interesting alternatives to plain time estimation, such as story points, t-shirt sizes, poker planning… They do work incredibly well, but It will take time until your team gets good at it.</p>
+<h2>9-Big bang deployments do not work, stop doing them.</h2>
+<p>It is 2018 and I still have conversations with developers telling me that in their own companies there is a deployment to production every month (or even every 3 months), that is simply a recipe for chaos.</p>
+<p>It is much simpler, to deploy small and deploy often than making big deployments, and for good reasons: first, any process that is done often will get automated quickly, second if you make mistakes you will have a much quicker feedback cycle to improve it and third the business will be actually happier as the mean time to deploy a feature will be greatly reduced.</p>
+<p>Saying that you do not have the capacity to automate deployments so they are more often is like saying you cannot go and grab a fire extinguisher to put off a fire because you are too busy using little glasses of water instead.</p>
+<p>In short: automate deployments, make them common, small and non-scary, everyone will be happier.</p>
+<h2>10-Developers need to understand the business.</h2>
+<p>This seems obvious but unfortunately it is quite common to work in many places and when a dev is asked “why are you doing this?” it might take a few questions until you actually get a satisfactory answer, example:</p>
+<ol>
+<li>Why are you adding a table?</li>
+<li>So we can store product types?</li>
+<li>And why do we need to store product types?</li>
+<li>Because we want to display them in a dashboard?</li>
+<li>And why do we want to display products in a dashboard by type?</li>
+<li>So the business can decide which type needs more marketing.</li>
+</ol>
+<p>There we go!! this is surprisingly common, it is not due to lack of interest or lack of communication, it is just that we developers sometimes get too focus on the technical part, but I have found it incredibly beneficial for me to understand WHY things were being done and what was the ultimate goal of the feature I was building.</p>
+<p>This is specially important in startups where things are a bit crazy (or fast-paced, whatever term you prefer), in those environments there is always a fight between developers wanting to rewrite part of the systems and the business desperately trying to close the next financing round.
+11-Everything else being equal, consistency wins.</p>
+<p>We all have, as developers, our own preferences, some of them can quickly turn into religious wars (for example, where should we place curly braces? in the same line or in the next line?).</p>
+<p>I am a strong advocate of consistency, more often than not I have actually agreed to follow certain naming conventions that I might not share, but that were well established, of course if you really see something that is wrong, by all means change it, but there are certain areas that are more preference than science, as an example, methods names:</p>
+<div class="highlight"><pre><span></span>    <span class="n">User</span> <span class="nf">getUserById</span><span class="o">(</span><span class="kt">int</span> <span class="n">userId</span><span class="o">)</span>
+    <span class="n">User</span> <span class="nf">getById</span><span class="o">(</span><span class="kt">int</span> <span class="n">userId</span><span class="o">)</span>
+    <span class="n">User</span> <span class="nf">findById</span><span class="o">(</span><span class="kt">int</span> <span class="n">userId</span><span class="o">)</span>
+    <span class="n">User</span> <span class="nf">loadById</span><span class="o">(</span><span class="kt">int</span> <span class="n">userId</span><span class="o">)</span>
+</pre></div>
+
+
+<p>Which method is the best one? what is the best naming convention? I do have my preference, but if everyone else has already agreed to use, say <code>loadById</code>, then why should I start changing the names for other entities? what value am I adding? apart from satisfying my own preferences, am I making the code any better?</p>
+<p>Coding software is, largely, a team activity, and there will be clashes, and there will be disagreements, be ready to bend some times and be ready to accept certain things, choose what is really worth a fight and what is not.</p>
+<h2>12-It is much easier to code things correctly from the beginning.</h2>
+<p>Ok, we have all cut corners sometimes, but honestly, looking back now, was it worth it? there are scenarios in which it is ok to do so, but to learn which scenarios are is something that takes quite a few years.</p>
+<p>The reality is that, it will be YOU the one who will have to deal with the crappy code you are writing today to satisfy the business people, so when required, put up a fight. Know which battles to choose, as it is not always easy to win them, and sometimes put up a fight, even if you know you cannot win it, it sends a message.</p>
+<p>But to be fair, in many cases the fault is not on the business, it is on us, after all, it is the job of the business to keep the money coming and it is YOUR job to deliver high quality code, this means writing tests constantly and as you are developing your features, not at the end “if you have time”, tests are part of the code I expect developers to deliver, plus they have saved my ass so many times that I have learn (sometimes the hard way) to write them and give them the importance they deserve.</p>
+<p>Also, every time you write bad code, you are sending a message to the next developer that it is fine to do so, this is closely related to the theory of the broken window which essentially establishes that if your code has dirty areas, the rest of the code will not be respected and will get dirty too.</p>
+<h2>13-It is incredibly inefficient to use the same technology for everything.</h2>
+<p>So, yes, believe it or not there is no silver bullet. This is one of those recurrent mistakes I see in developers specially, I have heard so many times people saying “I am a Java developer” (or php, or ruby, or python… whatever you prefer), it is a terrible mistake, and it is as absurd as saying “I am a Toyota taxi driver”.</p>
+<p>Why do we get obsessed with a single programming language? sure I love java, but if you want to build a single page with a form php will do better, or if you need to analyze a csv file python or R will be fantastic.</p>
+<p>The only thing a developer should never stop doing is learning, there are an incredibly large number of technologies out there, sure you can not learn all of them, but before you start writing a complex data structure in java to handle tables, you might want to check pandas or R before.</p>
+<p>Being a developer is not so different from being a handy man, you need to to know your tools and, from time to time, TRY other tools, as they can help you to succeed, at the end, it does not matter which technology you used, as long as the code works and can be maintained, do not be afraid of going into that other programming language that has such a bad name at your office, you would be surprised.</p>
+<h2>14-When (not if) an error occurs, do a post-mortem and learn from it.</h2>
+<p>There is only one thing worse than introducing a terrible bug into a production system, and that is not learning from it.</p>
+<p>If you have been working in the software industry for a few years, I am fairly sure you have made mistakes, some of them might be not too bad (maybe some test emails were send to the users) some others are more serious (pretty much anything related with payments). In every single case, it is fundamental to have a post-mortem so the situation can be analyzed, determine what was done well, what was done wrong and what could have been done better.</p>
+<p>Post-mortems are one of the most effective ways of learning from our mistakes, hopefully it is not a process we do a lot, but it will happen. This is specially important for junior developers: you WILL make mistakes, but chances are it is not as terrible as you think, but if you do not learn from those mistakes and you do not improve, then we have a problem, do not be scared of acknowledging your errors in most of companies actually it is seen as a correct aptitude (and if you are in a company where there is a witch hunt after each mistake, you might want to look for another job anyway).</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
